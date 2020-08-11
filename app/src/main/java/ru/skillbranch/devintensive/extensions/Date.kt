@@ -11,6 +11,8 @@ const val MINUTE: Long = SECOND * 60L;
 const val HOUR: Long = MINUTE * 60L;
 const val DAY: Long = HOUR * 24L;
 
+enum class TimeUnits {SECOND, MINUTE, HOUR, DAY}
+
 
 fun Date.humanizeDiff(date: Date = this): String{
 
@@ -89,13 +91,13 @@ fun Date.format(pattern: String = "HH:mm:ss dd.MM.yy"): String{
     return dateFormat.format(this);
 }
 
-fun Date.add(value: Int, timeUnits: TimeUnit): Date{
+fun Date.add(value: Int, timeUnits: TimeUnits): Date{
     var time = this.time;
     time += when(timeUnits){
-        TimeUnit.SECONDS -> value * SECOND;
-        TimeUnit.MINUTES -> value * MINUTE;
-        TimeUnit.HOURS -> value * HOUR;
-        TimeUnit.DAYS -> value * DAY;
+        TimeUnits.SECOND -> value * SECOND;
+        TimeUnits.MINUTE -> value * MINUTE;
+        TimeUnits.HOUR -> value * HOUR;
+        TimeUnits.DAY -> value * DAY;
         else -> throw IllegalArgumentException();
     }
     this.time = time;
