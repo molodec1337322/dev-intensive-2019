@@ -71,7 +71,7 @@ class Bender(
         val validatedAnswer: String? = validateAnswer(answer)
         return if(question.answers.contains(answer)){
             question = question.nextQuestion()
-            "Это правильный ответ\n${question.question}" to status.color
+            "Отлично - ты справился\n${question.question}" to status.color
         }
         else{
             when {
