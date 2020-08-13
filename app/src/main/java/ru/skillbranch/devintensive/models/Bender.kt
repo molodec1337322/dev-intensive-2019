@@ -56,11 +56,18 @@ class Bender(
         }
     }
 
+    fun checkForDigits(str:String): Boolean{
+        for (i in 0..str.length-1){
+            if(str.get(i).isDigit()) return true
+        }
+        return false
+    }
+
     fun validateAnswer(answer: String): String?{
         return when(question){
             Question.NAME -> if(answer.getOrNull(0)!!.isLowerCase())"Имя должно начинаться с заглавной буквы" else null
             Question.PROFESSION -> if(answer.getOrNull(0)!!.isUpperCase())"Профессия должна начинаться со строчной буквы" else null
-            Question.MATERIAL -> if(!answer.contains("[0123456789]")) "Материал не должен содержать цифр" else null
+            Question.MATERIAL -> if(checkForDigits(answer)) "Материал не должен содержать цифр" else null
             Question.BDAY -> if(!answer.contains("[^0123456789]"))"Год моего рождения должен содержать только цифры" else null
             Question.SERIAL -> if(!answer.contains("[^01234567899]") && answer.length != 7)"Серийный номер содержит только цифры, и их 7" else null
             Question.IDLE -> null
@@ -72,6 +79,9 @@ class Bender(
         return if(question.answers.contains(answer)){
             question = question.nextQuestion()
             "Отлично - ты справился\n${question.question}" to status.color
+        }
+        else if(question == Question.IDLE){
+            question.question to status.color
         }
         else{
             when {
