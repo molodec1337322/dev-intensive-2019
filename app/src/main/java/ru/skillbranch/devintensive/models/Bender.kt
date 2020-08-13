@@ -26,19 +26,19 @@ class Bender(
         NAME("Как меня зовут?", listOf("Бендер", "Bender")){
             override fun nextQuestion(): Question = PROFESSION
         },
-        PROFESSION ("Какая моя профессия?", listOf("сгибальщик", "bender")){
+        PROFESSION("Назови мою профессию?", listOf("сгибальщик", "bender")){
             override fun nextQuestion(): Question = MATERIAL
         },
         MATERIAL ("Из чего я сделан?", listOf("металл", "дерево", "metal", "iron", "wood")){
             override fun nextQuestion(): Question = BDAY
         },
-        BDAY ("Когда меня собрали?", listOf("2993")){
+        BDAY("Когда меня создали?", listOf("2993")){
             override fun nextQuestion(): Question = SERIAL
         },
-        SERIAL ("Какой мой серийный номер?", listOf("2716057")){
+        SERIAL("Мой серийный номер?", listOf("2716057")){
             override fun nextQuestion(): Question = IDLE
         },
-        IDLE ("Вопросов больше нет", listOf()){
+        IDLE("На этом все, вопросов больше нет", listOf()){
             override fun nextQuestion(): Question = IDLE
         };
 
@@ -83,7 +83,7 @@ class Bender(
                 }
                 else -> {
                     status = status.nextStatus()
-                    "Это не правильный ответ\n${question.question}" to status.color
+                    "Это неправильный ответ\n${question.question}" to status.color
                 }
             }
         }
