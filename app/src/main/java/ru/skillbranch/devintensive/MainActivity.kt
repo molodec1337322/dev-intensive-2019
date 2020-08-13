@@ -2,10 +2,8 @@ package ru.skillbranch.devintensive
 
 import android.graphics.Color
 import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import android.widget.EditText
@@ -18,10 +16,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     lateinit var benderImage: ImageView
     lateinit var textTxt: TextView
-    lateinit var messageText: EditText
-    lateinit var sendButton: ImageView
+    lateinit var messageEt: EditText
+    lateinit var sendBtn: ImageView
 
-    lateinit var mBender: Bender
+    lateinit var benderObj: Bender
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,21 +32,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         val etMessageText = savedInstanceState?.getString("ET_MESSAGE") ?: ""
 
-        messageText = et_messgae
-        messageText.setText(etMessageText)
+        messageEt = et_messgae
+        messageEt.setText(etMessageText)
 
-        sendButton = iv_send_message
+        sendBtn = iv_send
 
         val status = savedInstanceState?.getString("STATUS") ?: Bender.Status.NORMAL.name
         val question = savedInstanceState?.getString("QUESTION") ?: Bender.Question.NAME.name
 
-        mBender = Bender(status = Bender.Status.valueOf(status), question = Bender.Question.valueOf(question))
-        val (r, g, b) = mBender.status.color
+        benderObj = Bender(status = Bender.Status.valueOf(status), question = Bender.Question.valueOf(question))
+        val (r, g, b) = benderObj.status.color
         benderImage.setColorFilter(Color.rgb(r, g, b), PorterDuff.Mode.MULTIPLY)
 
-        textTxt.setText(mBender.askQuestion())
+        textTxt.setText(benderObj.askQuestion())
 
-        sendButton.setOnClickListener(this)
+        sendBtn.setOnClickListener(this)
     }
 
     override fun onRestart() {
@@ -83,16 +81,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState?.getString("STATUS", mBender.status.name)
-        outState?.getString("QUESTION", mBender.question.name)
+        outState?.getString("STATUS", benderObj.status.name)
+        outState?.getString("QUESTION", benderObj.question.name)
         outState?.getString("ET_MESSAGE", et_messgae.text.toString())
     }
 
     override fun onClick(v: View?) {
-        if(v?.id == R.id.iv_send_message){
-            val (phrase, color) = mBender.listenAnswer(messageText.text.toString().toLowerCase())
+        if(v?.id == R.id.iv_send){
+            val (phrase, color) = benderObj.listenAnswer(messageEt.text.toString())
             val (r, g, b) = color
-            messageText.setText("")
+            messageEt.setText("")
             benderImage.setColorFilter(Color.rgb(r, g, b), PorterDuff.Mode.MULTIPLY)
             textTxt.text = phrase
         }

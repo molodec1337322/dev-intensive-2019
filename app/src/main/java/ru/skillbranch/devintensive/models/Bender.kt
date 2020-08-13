@@ -23,7 +23,7 @@ class Bender(
     enum class Question(
         val question:String,
         val answers:List<String>){
-        NAME("Как меня зовут?", listOf("бендер", "bender")){
+        NAME("Как меня зовут?", listOf("Бендер", "Bender")){
             override fun nextQuestion(): Question = PROFESSION
         },
         PROFESSION ("Какая моя профессия?", listOf("сгибальщик", "bender")){
@@ -35,7 +35,7 @@ class Bender(
         BDAY ("Когда меня собрали?", listOf("2993")){
             override fun nextQuestion(): Question = SERIAL
         },
-        SERIAL ("Какой мой серийный номер?", listOf("275464765")){
+        SERIAL ("Какой мой серийный номер?", listOf("2716057")){
             override fun nextQuestion(): Question = IDLE
         },
         IDLE ("Вопросов больше нет", listOf()){
@@ -56,20 +56,35 @@ class Bender(
         }
     }
 
+    fun validateAnswer(answer: String): String?{
+        return when(question){
+            Question.NAME -> if(answer.getOrNull(0)!!.isLowerCase())"Имя должно начинаться с заглавной буквы" else null
+            Question.PROFESSION -> if(answer.getOrNull(0)!!.isUpperCase())"Профессия должна начинаться со строчной буквы" else null
+            Question.MATERIAL -> if(!answer.contains("[0123456789]")) "Материал не должен содержать цифр" else null
+            Question.BDAY -> if(!answer.contains("[^0123456789]"))"Год моего рождения должен содержать только цифры" else null
+            Question.SERIAL -> if(!answer.contains("[^01234567899]") && answer.length != 7)"Серийный номер содержит только цифры, и их 7" else null
+            Question.IDLE -> null
+        }
+    }
+
     fun listenAnswer(answer: String): Pair<String, Triple<Int, Int, Int>>{
+        val validatedAnswer: String? = validateAnswer(answer)
         return if(question.answers.contains(answer)){
             question = question.nextQuestion()
             "Это правильный ответ\n${question.question}" to status.color
         }
         else{
-            if(status == Status.CRITICAL){
-                question = Question.NAME
-                status = Status.NORMAL
-                "Это неправильный ответ. Давай все по новой\n${question.question}" to status.color
-            }
-            else {
-                status = status.nextStatus()
-                "Это не правильный ответ\n${question.question}" to status.color
+            when {
+                validatedAnswer!= null -> validatedAnswer + "\n" + question.question to status.color
+                status == Status.DANGER -> {
+                    question = Question.NAME
+                    status = Status.NORMAL
+                    "Это неправильный ответ. Давай все по новой\n${question.question}" to status.color
+                }
+                else -> {
+                    status = status.nextStatus()
+                    "Это не правильный ответ\n${question.question}" to status.color
+                }
             }
         }
     }
