@@ -6,6 +6,11 @@
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryDark">@color/color_gray_dark</item>
         <item name="colorAccent">@color/color_accent</item>
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+
+    <style name="noAnimTheme" parent="android:Theme">
+        <item name="android:windowAnimationStyle">@null</item>
     </style>
 
 </resources>
