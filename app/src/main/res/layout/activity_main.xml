@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
     
     <ImageView
-        android:id="@+id/iv_main_character"
+        android:id="@+id/iv_bender"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:src="@drawable/bender_dance"
@@ -34,7 +34,7 @@
         android:layout_marginTop="@dimen/spacing_normal_16">
 
         <EditText
-            android:id="@+id/et_messgae"
+            android:id="@+id/et_message"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:lines="1"
