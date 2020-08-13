@@ -26,13 +26,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_main)
         Log.d("M_MainActivity", "onCreate")
 
-        benderImage = iv_main_character
+        benderImage = iv_bender
         textTxt = tv_text
 
 
         val etMessageText = savedInstanceState?.getString("ET_MESSAGE") ?: ""
 
-        messageEt = et_messgae
+        messageEt = et_message
         messageEt.setText(etMessageText)
 
         sendBtn = iv_send
@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onSaveInstanceState(outState)
         outState?.getString("STATUS", benderObj.status.name)
         outState?.getString("QUESTION", benderObj.question.name)
-        outState?.getString("ET_MESSAGE", et_messgae.text.toString())
+        outState?.getString("ET_MESSAGE", et_message.text.toString())
     }
 
     override fun onClick(v: View?) {
