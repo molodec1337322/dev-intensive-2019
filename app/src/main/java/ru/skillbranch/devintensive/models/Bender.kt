@@ -63,10 +63,12 @@ class Bender(
         return false
     }
 
-    fun validateAnswer(answer: String): String?{
+    fun validateAnswer(answerNullable: String?): String?{
+        var answer = answerNullable
+        if(answer == null || answer == "") answer = " "
         return when(question){
-            Question.NAME -> if(answer.getOrNull(0)!!.isLowerCase())"Имя должно начинаться с заглавной буквы" else null
-            Question.PROFESSION -> if(answer.getOrNull(0)!!.isUpperCase())"Профессия должна начинаться со строчной буквы" else null
+            Question.NAME -> if(answer[0].isLowerCase())"Имя должно начинаться с заглавной буквы" else null
+            Question.PROFESSION -> if(answer[0].isUpperCase())"Профессия должна начинаться со строчной буквы" else null
             Question.MATERIAL -> if(checkForDigits(answer)) "Материал не должен содержать цифр" else null
             Question.BDAY -> if(!answer.contains("[^0123456789]"))"Год моего рождения должен содержать только цифры" else null
             Question.SERIAL -> if(!answer.contains("[^01234567899]") && answer.length != 7)"Серийный номер содержит только цифры, и их 7" else null
