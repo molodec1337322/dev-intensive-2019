@@ -8,7 +8,7 @@ class Bender(
         NORMAL(Triple(255, 255, 255)),
         WARNING (Triple(255, 120, 0)),
         DANGER (Triple(255, 60, 60)),
-        CRITICAL (Triple(255, 255, 255));
+        CRITICAL (Triple(255, 255, 0));
 
         fun nextStatus():Status{
             return if(this.ordinal < values().lastIndex){
@@ -76,7 +76,7 @@ class Bender(
         else{
             when {
                 validatedAnswer!= null -> validatedAnswer + "\n" + question.question to status.color
-                status == Status.DANGER -> {
+                status == Status.CRITICAL -> {
                     question = Question.NAME
                     status = Status.NORMAL
                     "Это неправильный ответ. Давай все по новой\n${question.question}" to status.color
