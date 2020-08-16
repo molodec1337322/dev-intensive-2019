@@ -103,6 +103,7 @@ class ProfileActivity : AppCompatActivity(){
         )
 
         isEditMode = savedInstanceState?.getBoolean(IS_EDIT_MODE, false) ?: false
+        showCurrentMode(isEditMode)
 
         btn_edit.setOnClickListener(View.OnClickListener {
             if(isEditMode) saveProfileInfo()
