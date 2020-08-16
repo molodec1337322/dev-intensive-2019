@@ -24,4 +24,13 @@ object Utils {
 
         return (firstInitial + secondInitial);
     }
+
+    fun isUriValid(uri: String?, validUri: String): Boolean{
+        return if(uri == null || uri == ""){
+            false
+        }
+        else{
+            // TODO: Доделать потом
+        }
+    }
 }
